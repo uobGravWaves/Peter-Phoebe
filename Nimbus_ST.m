@@ -1,4 +1,4 @@
-%Param Acquisition for Nimbus
+%Param Acquisition for Nimbus OOF
 %This will take AIRS data, apply a 2d+1 s transform, and save the required
 %outputs
 %This will be better than before, and will be made for nimbus
@@ -75,11 +75,11 @@ function [bigParam] = fullAquis(year, month, day)
                 bigParam = cell2struct(cellfun(@single,struct2cell(bigParam),'uni',false),fieldnames(bigParam),1);
         
             else
-                disp(strcat('File not found', file2);
+                disp(strcat('File not found', file2));
                 continue
             end
         else
-            disp(strcat('File not found', file1);
+            disp(strcat('File not found', file1));
             continue
         end
     end
