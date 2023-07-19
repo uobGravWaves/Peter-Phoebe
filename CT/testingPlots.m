@@ -1,30 +1,37 @@
 
-a = dir(fullfile(cd, 'data', 'ozone', '*.nc'));
+%Read in folder with data
+%Change seaice for whichever data you want
+% cd('Peter-Phoebe/CT')
+
+a = dir(fullfile(cd, 'data', 'sealevel', '*.nc'));
 n = numel(a);
 
-ozbig = zeros(18, 23, n);
+%Set up the actually interesting variable
+%432 x 432 for sea ice
+%1440 x 720 for sea level
+bigVar = zeros(1440, 720, n);
 
+%Save interesting variable to array
 for bean = 1:n
-    ozone = rCDF(fullfile(a(1).folder, a(bean).name), 0);
-    ozbig(:,:,bean) = ozone.merged_ozone_concentration;
-%     clear ozone
+    dataset = rCDF(fullfile(a(1).folder, a(bean).name), 0);
+    %Change RHS for the variable you want
+    bigVar(:,:,bean) = dataset.sla;
 end
-% figure
-% m_proj('miller')
-% m_grid
-% % pcolor(ozone.merged_ozone_vmr);shading flat
-for x = 1:size(ozbig, 3)
-%         m_pcolor(sea.lon-180, sea.lat, sea.sla');shading flat
-        pcolor(ozone.approximate_altitude, ozone.latitude_centers, ozbig(:,:,x));shading flat
+
+%This is just bigshow
+%They already have their map set up as blank space?? Wonderful
+figure
+for x = 1:size(bigVar, 3)
+
+%         pcolor(bigVar(:,:,x));shading flat
+        %For sea level (need the ' for it to be the correct orientation)
+        pcolor(bigVar(:,:,x)');shading flat
+        %For ozone
+%         pcolor(ozone.approximate_altitude, ozone.latitude_centers, bigVar(:,:,x));shading flat
         colorbar
         drawnow
-        pause(0.05*2)
+        pause(0.1)
 end
 
 
-% sea = rCDF('ESACCI-SEALEVEL-L4-MSLA-MERGED-20000215000000-fv02.nc', 0);
-% 
-% 
-% m_pcolor(sea.lon-180, sea.lat, sea.sla');shading flat
-% hold on
-% m_coast
+
