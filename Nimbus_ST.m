@@ -56,10 +56,16 @@ function [bigParam] = fullAquis(year, month, day)
 %                 AirBoth.ret_z = AirTwo.ret_z;
                 [ST, Airs] = gwanalyse_airs_3d(AirBoth, 'MaxWaveLength', [500 500 99e99], 'TwoDPlusOne', true);
                 
+                %Adding the "second mask" here so I dont fuck up gwanalyse
+                %If it doesn't work (because it hates me), comment it out
+                %and change the nST line back to "ST.WaveMask" instead of
+                %"mask"
+                mask = thirdMask(ST, 0.8, 150, 0.5, 50, {'k', 'l'}, [5, 5, 1], 2);
+
                 [~, zidx] = min(abs(Airs.ret_z-39));
                 kms = zidx(1);
                  %Set up new structure with just one altitude (39km) and renames the "_2dp1" bits
-                nST = struct('A', ST.A_2dp1(:,:,kms), 'k', ST.k_2dp1(:,:,kms), 'l', ST.l_2dp1(:,:,kms), 'm', ST.m_2dp1(:,:,kms), 'WaveMask', ST.WaveMask(:,:,kms));
+                nST = struct('A', ST.A_2dp1(:,:,kms), 'k', ST.k_2dp1(:,:,kms), 'l', ST.l_2dp1(:,:,kms), 'm', ST.m_2dp1(:,:,kms), 'WaveMask', mask(:,:,kms));
         
                 % bigParam.height(:, :, granule) = Airs.ret_z;
                 bigParam.lat(:, :, granule) = Airs.l1_lat(:, 67:201);
