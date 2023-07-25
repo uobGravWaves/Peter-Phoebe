@@ -6,8 +6,8 @@
 
 month = 1;
 
-for year = 2010:1:2010
-    for day = 78:78
+for year = 2012:1:2012
+    for day = 183:183
         date = join(string([year, month, day]), '_');
         savelocation = fullfile(LocalDataDir, 'peter',num2str(year));
         filename = fullfile(savelocation, date);
@@ -29,8 +29,8 @@ function [bigParam] = fullAquis(year, month, day)
     bigParam = struct('lat', base, 'lon', base, 'height', 39, 'time', base, 'daynight', base, 'Bg', base, 'Tp', base, 'A', base, 'k', base, 'l', base, 'm', base, 'mask', base);
     
    
-    % for granule = 1:nograns
-    for granule = 240
+    for granule = 1:nograns
+    % for granule = 240
         granule
 
         dayofyear = sprintf("%03d",day);
