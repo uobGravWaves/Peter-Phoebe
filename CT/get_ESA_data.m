@@ -34,7 +34,7 @@
 %
 
 
-function NC = readNetCDF(filepath,varargin)
+function NC = get_ESA_data(filepath,varargin)
 
 %% Open netcdf file %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 nci = ncinfo(filepath);
